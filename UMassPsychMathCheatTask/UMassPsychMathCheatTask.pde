@@ -5,6 +5,13 @@ import controlP5.*;
 
 ControlP5 cp5;
 
+ControlGroup introG;
+ControlGroup trialG;
+ControlGroup doneG;
+
+Textarea introText;
+Textarea doneText;
+
 Textlabel eqLabel;
 Textlabel rightLabel;
 Textlabel wrongLabel;
@@ -26,18 +33,11 @@ public color IF_ACTIVE = color(232, 47, 47);
 
 void setup() {
   // set up app window
-  size(600, 600);
+  size(400, 400);
   frameRate(25);
 
   // create interface
   cp5 = new ControlP5(this);
-
-  eqLabel = cp5.addTextlabel("equation", "++++", 200, 240);
-  rightLabel = cp5.addTextlabel("right", "Correct", 290, 180);
-  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 230, 180);
-
-  answerText = cp5.addTextfield("answer", 260, 280, 35, 20);
-  submitButton = cp5.addButton("submit", 0, 310, 280, 50, 20);
 
   cp5.setColorForeground(IF_FG);
   cp5.setColorBackground(IF_BG);
@@ -45,11 +45,33 @@ void setup() {
   cp5.setColorValue(IF_VALUE);
   cp5.setColorActive(IF_ACTIVE);
 
-  rightLabel.setColorValue(RIGHT_COLOR);
-  wrongLabel.setColorValue(WRONG_COLOR);
+  introG = cp5.addGroup("intro", 0, 0, 400);
+  introText = cp5.addTextarea("introText", "INTRO TEXT HERE", 0, 0, 400, 400);
+  introText.setGroup("intro");
 
-  // rightLabel.setVisible(false);
-  // wrongLabel.setVisible(false);
+  trialG = cp5.addGroup("trial", 0, 0, 400);
+  eqLabel = cp5.addTextlabel("equation", "++++++++++", 0, 50);
+  eqLabel.setColorValue(IF_VALUE);
+  rightLabel = cp5.addTextlabel("right", "Correct", 0, 20);
+  rightLabel.setColorValue(RIGHT_COLOR);
+  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 0, 20);
+  wrongLabel.setColorValue(WRONG_COLOR);
+  answerText = cp5.addTextfield("answer", 0, 80, 35, 20);
+  submitButton = cp5.addButton("submit", 0, 50, 80, 50, 20);
+  rightLabel.hide();
+  wrongLabel.hide();
+  eqLabel.setGroup("trial");
+  rightLabel.setGroup("trial");
+  wrongLabel.setGroup("trial");
+  answerText.setGroup("trial");
+  submitButton.setGroup("trial");
+
+  doneG = cp5.addGroup("done", 0, 0, 400);
+  doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, 400, 400);
+  doneText.setGroup("done");
+
+  // start intro interface
+  doIntro();
 }
 
 void draw() {
@@ -68,4 +90,28 @@ public void keyPressed() {
   if (key == ' ') {
     println("space pressed");
   }
+}
+
+// do intro
+void doIntro() {
+  showIntro();
+}
+
+// show intro
+void showIntro() {
+  introG.show();
+  trialG.hide();
+  doneG.hide();
+}
+
+// show answer interface
+void showTrial() {
+  introG.hide();
+  trialG.show();
+}
+
+// show conclusion
+void showConclusion() {
+  trialG.hide();
+  doneG.show();
 }
