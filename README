@@ -1,0 +1,79 @@
+UMass Amherst Social Psychology Math Cheating Task Application
+Copyright © 2012
+Mindi Rock, Evan Shelhamer
+mrock@psych.umass.edu, eshelham@cs.umass.edu
+
+This application, its data, and documentation are released under the MIT license
+(see LICENSE). The authors make no guarantee or warranty, express or implied,
+regarding this software.
+
+-- The Experiment --
+
+The Math Cheating Task Application implements an experiment in which subjects
+answer arithmetic questions with the option to cheat. Their responses are
+collected, along with timing and whether or not the subject cheated. The
+application sequentially presents 20 arithmetic questions with natural numbers
+in the range of 1-20 and the operations of addition and subtraction. A response
+is accepted from the subject by typing the answer. If a response is incorrect,
+the question is repeated. The presentation of a question and the series of
+responses until the correct solution make up a single trial. There is no time
+limit in answering the questions.
+
+An answer is entered by typing a number into a text box and pressing enter. If
+the answer is correct, a prompt informs the subject and the next trial begins.
+If the answer is incorrect, a prompt informs the subject and the current trial
+continues.
+
+The experiment is divided into two blocks of ten questions.
+
+Subjects may cheat by pressing the space bar during the presentation of a
+question. The answer is displayed once the space bar has pressed. This is
+explained as an artifact of testing the application that the programmer failed
+to remove when the application was finished.
+
+The equations presented for the experiment are fixed for all subjects. If
+desired, random equations could be generated instead with simple modifications
+of the application.
+
+-- The Data --
+
+The data for each subject is written to a file in CSV (comma-separated value)
+format. The filename is of the form "subject1.csv" where 1 is the subject number
+input by the experimenter at the beginning of the experiment.
+
+Each trial is written to a single line of the file.
+
+The data fields recorded for each trial are:
+
+* trial time: the total time elapsed (in ms) from the beginning of a trial
+  until its correct solution
+* number of attempts: the number of answers submitted for the trial; this is
+  1 for a correct answer on the first attempt
+* solution time: the time (in ms) from the last presentation of the question
+  until the submission of the correct solution
+* cheat time: the time in (ms) from the last presentation of the question
+  until the subject cheats by pressing the space bar to display the answer.
+  0 if the subject does not cheat on a trial.
+
+These fields are written in this order: trial time, number of attempts, solution
+time, cheat time.
+
+The CSV data files can be read by many standard office and statistical
+applications such as Excel, R, SPSS, etc.
+
+-- The Application --
+
+This application is implemented with the Processing programming language and
+environment. Processing is an open source, cross platform, and freely-available
+platform for general purpose interactive applications with special functionality
+for web, art, and music purposes.
+
+To learn more about Processing visit http://http://processing.org/
+
+-- Citing --
+
+Rock, M., Shelhamer, E. (2012). Math Cheating Task Application (Version 1).
+
+  [Computer software]. Amherst, MA: University of Massachusetts Amherst.
+
+  Available from http://github.com/shelhamer/umass-psych-math-cheat-task
