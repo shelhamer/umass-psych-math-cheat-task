@@ -19,14 +19,14 @@ Textlabel wrongLabel;
 Textfield answerText;
 Button submitButton;
 
-public color BG_COLOR = color(250, 250, 250);
-public color RIGHT_COLOR = color(31, 95, 31);
-public color WRONG_COLOR = color(255, 0, 0);
-public color IF_BG = color(236, 236, 236);
-public color IF_FG = color(220, 220, 220);
-public color IF_LABEL = color(0, 0, 0);
-public color IF_VALUE = color(0, 0, 0);
-public color IF_ACTIVE = color(232, 47, 47);
+color BG_COLOR = color(250, 250, 250);
+color RIGHT_COLOR = color(31, 95, 31);
+color WRONG_COLOR = color(255, 0, 0);
+color IF_BG = color(236, 236, 236);
+color IF_FG = color(220, 220, 220);
+color IF_LABEL = color(0, 0, 0);
+color IF_VALUE = color(0, 0, 0);
+color IF_ACTIVE = color(232, 47, 47);
 
 /* =Experiment
 -------------------------------*/
