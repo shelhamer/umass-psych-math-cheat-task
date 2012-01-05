@@ -83,6 +83,8 @@ void setup() {
   answerText = cp5.addTextfield("answer", 10, 80, 35, 20);
   submitButton = cp5.addButton("submitButton", 10, 50, 80, 50, 20);
   submitButton.setCaptionLabel("Submit");
+
+  answerText.keepFocus(true);
   eqLabel.setGroup("trial");
   answerLabel.setGroup("trial");
   rightLabel.setGroup("trial");
