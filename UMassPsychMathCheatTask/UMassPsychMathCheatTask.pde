@@ -39,6 +39,10 @@ final int EXPERIMENT = 2;
 final int DONE = 3;
 int thisState = INTRO;
 
+boolean nextTrial = false;
+float trialEnd;
+float TRIAL_PAUSE = 1000;
+
 // Questions and answers
 ArrayList questions, answers;
 String question, answer;
@@ -100,13 +104,38 @@ void setup() {
 
 void draw() {
   background(BG_COLOR);
+
+  // advance to next trial when necessary
+  if (thisState == EXPERIMENT
+      && nextTrial
+      && (millis() - trialEnd > TRIAL_PAUSE)) {
+    nextTrial = false;
+    question = (String) questions.remove(0);
+    answer = (String) answers.remove(0);
+    showTrial();
+  }
 }
 
 // answer textfield event handler
 // check submitted answer, inform subject, continue or repeat if right/wrong
 public void answer(String val) {
   if (thisState == EXPERIMENT) {
-    // TODO: continue to next trial if right or repeat
+    if (answer.equals(val)) {
+      // right: show subject, pause, then continue
+      rightLabel.show();
+      wrongLabel.hide();
+
+      if (questions.size() > 0) {
+        nextTrial = true;
+        trialEnd = millis();
+      } else {
+        doConclusion();
+      }
+    } else {
+      // wrong: show subject, and allow repeat
+      wrongLabel.show();
+      rightLabel.hide();
+    }
   }
   else if (thisState == PRACTICE) {
     // show subject right/wrong feedback
@@ -164,11 +193,15 @@ public void keyPressed() {
 // do intro
 void doIntro() {
   // select output file for experiment data
+  if (false) {
   dataFilePath = selectOutput();
   if (dataFilePath == null)
     exit();
   else
     out = createWriter(dataFilePath);
+  }
+  dataFilePath = "/Users/shelhamer/h/temp/test";
+  out = createWriter(dataFilePath);
 
   // start intro
   showIntro();
@@ -187,8 +220,27 @@ void doPractice() {
 
 // do experiment
 void doExperiment() {
-  showTrial();
   thisState = EXPERIMENT;
+
+  // load questions & answers from text file
+  questions = new ArrayList();
+  answers = new ArrayList();
+  BufferedReader reader = createReader("questions-answers.txt");
+  try {
+    String line;
+    while ((line = reader.readLine()) != null) {
+      String[] parts = line.split("=");
+      questions.add(parts[0]);
+      answers.add(parts[1]);
+    }
+  } catch (IOException e) {
+  }
+
+  // Set 1st trial's question & answer
+  question = (String) questions.remove(0);
+  answer = (String) answers.remove(0);
+
+  showTrial();
 }
 
 // do conclusion
@@ -208,6 +260,7 @@ void showIntro() {
 void showTrial() {
   eqLabel.setValue(question);
   answerLabel.setValue(answer);
+  answerText.clear();
 
   answerLabel.hide();
   rightLabel.hide();
