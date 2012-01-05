@@ -49,7 +49,7 @@ String question, answer;
 
 // Response fields
 int trialAttempts;
-float trialStart, trialTime;
+float trialStart, lastStart, trialTime;
 float answerTime;
 float cheatTime;
 
@@ -112,9 +112,16 @@ void draw() {
       && nextTrial
       && (millis() - trialEnd > TRIAL_PAUSE)) {
     nextTrial = false;
+
+    // prepare & display interface
     question = (String) questions.remove(0);
     answer = (String) answers.remove(0);
     showTrial();
+
+    // init response fields
+    trialAttempts = 0;
+    trialStart = millis(); lastStart = trialStart;
+    answerTime = 0; cheatTime = 0;
   }
 }
 
@@ -122,21 +129,35 @@ void draw() {
 // check submitted answer, inform subject, continue or repeat if right/wrong
 void answer(String val) {
   if (thisState == EXPERIMENT) {
+    trialAttempts++;
+
     if (answer.equals(val)) {
       // right: show subject, pause, then continue
       rightLabel.show();
       wrongLabel.hide();
 
       if (questions.size() > 0) {
+        // advance to next trial as long as there are more
         nextTrial = true;
-        trialEnd = millis();
+
+        // calculate completion times
+        float doneTime = millis();
+        trialTime = doneTime - trialStart;
+        answerTime = doneTime - lastStart;
+
+        // record this trial
+        out.println(trialTime + "," + trialAttempts + "," + "answerTime" + "," + cheatTime);
+        out.flush();
       } else {
+        // conclude experiment when trials are exhausted
         doConclusion();
       }
     } else {
       // wrong: show subject, and allow repeat
       wrongLabel.show();
       rightLabel.hide();
+
+      lastStart = millis();
     }
   }
   else if (thisState == PRACTICE) {
@@ -175,7 +196,6 @@ void keyPressed() {
 
     case DONE:
       if (key == 'c') {
-        out.flush();
         out.close();
         exit();
       }
@@ -186,9 +206,12 @@ void keyPressed() {
 // mousepress handler
 // allow cheating during practice & experiment by pressing mouse
 void mousePressed() {
-  if (thisState == PRACTICE || thisState == EXPERIMENT)
-    if (mouseButton == RIGHT)
+  if (thisState == PRACTICE || thisState == EXPERIMENT) {
+    if (mouseButton == RIGHT) {
+      cheatTime = millis() - lastStart;
       answerLabel.show();
+    }
+  }
 }
 
 // do intro
@@ -233,11 +256,8 @@ void doExperiment() {
   } catch (IOException e) {
   }
 
-  // Set 1st trial's question & answer
-  question = (String) questions.remove(0);
-  answer = (String) answers.remove(0);
-
-  showTrial();
+  // trigger first trial
+  nextTrial = true;
 }
 
 // do conclusion
