@@ -143,7 +143,6 @@ public void keyPressed() {
     case EXPERIMENT:
       if (key == ' ') {
         answerLabel.show();
-        println("cheat");
       }
       break;
 
