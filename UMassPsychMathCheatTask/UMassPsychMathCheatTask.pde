@@ -31,6 +31,12 @@ color IF_ACTIVE = color(232, 47, 47);
 /* =Experiment
 -------------------------------*/
 
+final int INTRO = 0;
+final int PRACTICE = 1;
+final int EXPERIMENT = 2;
+final int DONE = 3;
+int thisState = INTRO;
+
 void setup() {
   // set up app window
   size(400, 400);
@@ -87,14 +93,51 @@ public void textAnswer(String val) {
 // cheat keypress handler
 // show answer once space bar is pressed
 public void keyPressed() {
-  if (key == ' ') {
-    println("space pressed");
+  switch (thisState) {
+    case INTRO:
+      if (key == ' ') {
+        doPractice();
+        println("start practice");
+      }
+      break;
+
+    case PRACTICE:
+      if (key == ' ') {
+        doExperiment();
+        println("start experiment");
+      }
+      break;
+
+    case EXPERIMENT:
+      if (key == ' ') {
+        println("cheat");
+      }
+      break;
   }
 }
 
 // do intro
 void doIntro() {
   showIntro();
+  thisState = INTRO;
+}
+
+// do practice
+void doPractice() {
+  showTrial();
+  thisState = PRACTICE;
+}
+
+// do experiment
+void doExperiment() {
+  showTrial();
+  thisState = EXPERIMENT;
+}
+
+// do conclusion
+void doConclusion() {
+  showConclusion();
+  thisState = DONE;
 }
 
 // show intro
