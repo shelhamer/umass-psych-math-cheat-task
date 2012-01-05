@@ -10,6 +10,7 @@ ControlGroup trialG;
 ControlGroup doneG;
 
 Textarea introText;
+Textarea practiceText;
 Textarea doneText;
 
 Textlabel eqLabel;
@@ -57,6 +58,33 @@ float cheatTime;
 String dataFilePath;
 PrintWriter out;
 
+// Prompts
+final String INTRO_PROMPT = "The following task is a classic cognitive " +
+"experiment that looks at mathematical skills. You will be presented with an " +
+"equation that we would like you to solve. It consists of 10 numbers between 1 " +
+"and 20 that are to be added or subtracted. The equation will appear on screen " +
+"with a response box. Please calculate the correct response as fast as you can, " +
+"and enter it into the response box. Hit enter when you are done. You will be " +
+"informed whether your answer is correct or incorrect. If it is incorrect, you " +
+"will be given the opportunity to respond again until your answer is correct. " +
+"Shortly after you answer correctly, the next equation will appear. Altogether " +
+"there are 20 such equations, presented in two blocks of ten equations each." +
+"\n\n" +
+"If you have any questions before you begin, or if any problems arise " +
+"throughout the research, alert the experimenter." +
+"\n\n" +
+"Please press the SPACE BAR to continue.";
+
+final String PRACTICE_PROMPT = "This is a practice trial. Please enter the " +
+"solution to the equation shown. Try submitting a correct and incorrect " +
+"answer to see how the feedback changes." +
+"\n\n" +
+"When satisified with the practice, please press the SPACE BAR to continue " +
+"and begin the experiment.";
+
+final String DONE_PROMPT = "Thank you for completing our math task! The " +
+"experimenter will now provide you with additional instructions.";
+
 void setup() {
   // set up app window for full screen
   size(screen.width, screen.height);
@@ -76,10 +104,11 @@ void setup() {
   int centerY = Math.round(screen.height / 2.0 - groupSize / 2.0);
 
   introG = cp5.addGroup("intro", centerX, centerY, groupSize);
-  introText = cp5.addTextarea("introText", "INTRO TEXT HERE", 0, 0, groupSize, groupSize);
+  introText = cp5.addTextarea("introText", INTRO_PROMPT, 0, 0, groupSize, groupSize);
   introText.setGroup("intro");
 
   trialG = cp5.addGroup("trial", centerX, centerY, groupSize);
+  practiceText = cp5.addTextarea("pracText", PRACTICE_PROMPT, 0, 200, groupSize, groupSize);
   eqLabel = cp5.addTextlabel("equation", "++++++++++", 10, 50);
   answerLabel = cp5.addTextlabel("answerLabel", "++++++++++", 10, 140);
   rightLabel = cp5.addTextlabel("right", "Correct", 10, 20);
@@ -95,13 +124,14 @@ void setup() {
   wrongLabel.setGroup("trial");
   answerText.setGroup("trial");
   submitButton.setGroup("trial");
+  practiceText.setGroup("trial");
   eqLabel.setColorValue(IF_VALUE);
   answerLabel.setColorValue(IF_VALUE);
   rightLabel.setColorValue(RIGHT_COLOR);
   wrongLabel.setColorValue(WRONG_COLOR);
 
   doneG = cp5.addGroup("done", centerX, centerY, groupSize);
-  doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, groupSize, groupSize);
+  doneText = cp5.addTextarea("doneText", DONE_PROMPT, 0, 0, groupSize, groupSize);
   doneText.setGroup("done");
 
   // start intro interface
@@ -195,6 +225,7 @@ void keyPressed() {
 
     case PRACTICE:
       if (key == ' ') {
+        practiceText.hide(); // end practice by hiding prompt
         doExperiment();
       }
       break;
@@ -240,6 +271,7 @@ void doPractice() {
   question = "1+2+3+4+5";
   answer = "15";
 
+  practiceText.show();
   showTrial();
 }
 
