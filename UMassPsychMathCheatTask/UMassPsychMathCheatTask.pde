@@ -58,8 +58,8 @@ String dataFilePath;
 PrintWriter out;
 
 void setup() {
-  // set up app window
-  size(400, 400);
+  // set up app window for full screen
+  size(screen.width, screen.height);
   frameRate(25);
 
   // create interface
@@ -71,11 +71,15 @@ void setup() {
   cp5.setColorValue(IF_VALUE);
   cp5.setColorActive(IF_ACTIVE);
 
-  introG = cp5.addGroup("intro", 0, 0, 400);
-  introText = cp5.addTextarea("introText", "INTRO TEXT HERE", 0, 0, 400, 400);
+  int groupSize = 400;
+  int centerX = Math.round(screen.width / 2.0 - groupSize / 2.0);
+  int centerY = Math.round(screen.height / 2.0 - groupSize / 2.0);
+
+  introG = cp5.addGroup("intro", centerX, centerY, groupSize);
+  introText = cp5.addTextarea("introText", "INTRO TEXT HERE", 0, 0, groupSize, groupSize);
   introText.setGroup("intro");
 
-  trialG = cp5.addGroup("trial", 0, 0, 400);
+  trialG = cp5.addGroup("trial", centerX, centerY, groupSize);
   eqLabel = cp5.addTextlabel("equation", "++++++++++", 10, 50);
   answerLabel = cp5.addTextlabel("answerLabel", "++++++++++", 10, 140);
   rightLabel = cp5.addTextlabel("right", "Correct", 10, 20);
@@ -96,8 +100,8 @@ void setup() {
   rightLabel.setColorValue(RIGHT_COLOR);
   wrongLabel.setColorValue(WRONG_COLOR);
 
-  doneG = cp5.addGroup("done", 0, 0, 400);
-  doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, 400, 400);
+  doneG = cp5.addGroup("done", centerX, centerY, groupSize);
+  doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, groupSize, groupSize);
   doneText.setGroup("done");
 
   // start intro interface
