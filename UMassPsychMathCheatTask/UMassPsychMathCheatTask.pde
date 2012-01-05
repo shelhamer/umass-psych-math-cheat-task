@@ -13,6 +13,7 @@ Textarea introText;
 Textarea doneText;
 
 Textlabel eqLabel;
+Textlabel answerLabel;
 Textlabel rightLabel;
 Textlabel wrongLabel;
 
@@ -59,21 +60,25 @@ void setup() {
   introText.setGroup("intro");
 
   trialG = cp5.addGroup("trial", 0, 0, 400);
-  eqLabel = cp5.addTextlabel("equation", "++++++++++", 0, 50);
-  eqLabel.setColorValue(IF_VALUE);
-  rightLabel = cp5.addTextlabel("right", "Correct", 0, 20);
-  rightLabel.setColorValue(RIGHT_COLOR);
-  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 0, 20);
-  wrongLabel.setColorValue(WRONG_COLOR);
-  answerText = cp5.addTextfield("answer", 0, 80, 35, 20);
-  submitButton = cp5.addButton("submit", 0, 50, 80, 50, 20);
-  rightLabel.hide();
-  wrongLabel.hide();
+  eqLabel = cp5.addTextlabel("equation", "++++++++++", 10, 50);
+  answerLabel = cp5.addTextlabel("answerLabel", "++++++++++", 10, 140);
+  rightLabel = cp5.addTextlabel("right", "Correct", 10, 20);
+  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 10, 20);
+  answerText = cp5.addTextfield("answer", 10, 80, 35, 20);
+  submitButton = cp5.addButton("submitButton", 10, 50, 80, 50, 20);
+  submitButton.setCaptionLabel("Submit");
   eqLabel.setGroup("trial");
   rightLabel.setGroup("trial");
   wrongLabel.setGroup("trial");
   answerText.setGroup("trial");
   submitButton.setGroup("trial");
+  eqLabel.setColorValue(IF_VALUE);
+  answerLabel.setColorValue(IF_VALUE);
+  rightLabel.setColorValue(RIGHT_COLOR);
+  wrongLabel.setColorValue(WRONG_COLOR);
+  answerLabel.hide();
+  rightLabel.hide();
+  wrongLabel.hide();
 
   doneG = cp5.addGroup("done", 0, 0, 400);
   doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, 400, 400);
@@ -89,7 +94,7 @@ void draw() {
 
 // answer textfield event handler
 // check submitted answer, inform subject, continue or repeat if right/wrong
-public void textAnswer(String val) {
+public void answer(String val) {
   println("answer submitted : "+ val);
 }
 
@@ -105,6 +110,9 @@ public void keyPressed() {
       break;
 
     case PRACTICE:
+      if (key == ' ') {
+        answerLabel.show();
+      }
       if (key == 'c') {
         doExperiment();
         println("start experiment");
@@ -113,6 +121,7 @@ public void keyPressed() {
 
     case EXPERIMENT:
       if (key == ' ') {
+        answerLabel.show();
         println("cheat");
       }
       break;
