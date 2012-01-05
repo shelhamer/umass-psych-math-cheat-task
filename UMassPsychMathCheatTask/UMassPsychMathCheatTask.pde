@@ -141,9 +141,9 @@ void answer(String val) {
         nextTrial = true;
 
         // calculate completion times
-        float doneTime = millis();
-        trialTime = doneTime - trialStart;
-        answerTime = doneTime - lastStart;
+        trialEnd = millis();
+        trialTime = trialEnd - trialStart;
+        answerTime = trialEnd - lastStart;
 
         // record this trial
         String record = String.format("%.0f,%d,%.0f,%.0f", trialTime, trialAttempts, answerTime, cheatTime);
