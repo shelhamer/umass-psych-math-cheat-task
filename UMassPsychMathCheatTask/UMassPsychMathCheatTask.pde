@@ -184,23 +184,23 @@ void submitButton(int val) {
 }
 
 // keypress handler
-// advance through states when 'c' is pressed
+// advance through states when space is pressed
 void keyPressed() {
   switch (thisState) {
     case INTRO:
-      if (key == 'c') {
+      if (key == ' ') {
         doPractice();
       }
       break;
 
     case PRACTICE:
-      if (key == 'c') {
+      if (key == ' ') {
         doExperiment();
       }
       break;
 
     case DONE:
-      if (key == 'c') {
+      if (key == ' ') {
         out.close();
         exit();
       }
