@@ -98,14 +98,14 @@ public void textAnswer(String val) {
 public void keyPressed() {
   switch (thisState) {
     case INTRO:
-      if (key == ' ') {
+      if (key == 'c') {
         doPractice();
         println("start practice");
       }
       break;
 
     case PRACTICE:
-      if (key == ' ') {
+      if (key == 'c') {
         doExperiment();
         println("start experiment");
       }
@@ -118,7 +118,7 @@ public void keyPressed() {
       break;
 
     case DONE:
-      if (key == ' ') {
+      if (key == 'c') {
         out.flush();
         out.close();
         exit();
