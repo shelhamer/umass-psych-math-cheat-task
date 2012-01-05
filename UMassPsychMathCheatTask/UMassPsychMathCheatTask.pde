@@ -80,6 +80,7 @@ void setup() {
   submitButton = cp5.addButton("submitButton", 10, 50, 80, 50, 20);
   submitButton.setCaptionLabel("Submit");
   eqLabel.setGroup("trial");
+  answerLabel.setGroup("trial");
   rightLabel.setGroup("trial");
   wrongLabel.setGroup("trial");
   answerText.setGroup("trial");
