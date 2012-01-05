@@ -38,8 +38,8 @@ of the application.
 -- The Data --
 
 The data for each subject is written to a file in CSV (comma-separated value)
-format. The filename is of the form "subject1.csv" where 1 is the subject number
-input by the experimenter at the beginning of the experiment.
+format. The filename is chosen by the experimenter when the application is
+launched.
 
 Each trial is written to a single line of the file.
 

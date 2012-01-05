@@ -37,6 +37,9 @@ final int EXPERIMENT = 2;
 final int DONE = 3;
 int thisState = INTRO;
 
+String dataFilePath;
+PrintWriter out;
+
 void setup() {
   // set up app window
   size(400, 400);
@@ -113,11 +116,27 @@ public void keyPressed() {
         println("cheat");
       }
       break;
+
+    case DONE:
+      if (key == ' ') {
+        out.flush();
+        out.close();
+        exit();
+      }
+      break;
   }
 }
 
 // do intro
 void doIntro() {
+  // select output file for experiment data
+  dataFilePath = selectOutput();
+  if (dataFilePath == null)
+    exit();
+  else
+    out = createWriter(dataFilePath);
+
+  // start intro
   showIntro();
   thisState = INTRO;
 }
