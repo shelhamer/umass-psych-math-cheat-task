@@ -40,7 +40,14 @@ final int DONE = 3;
 int thisState = INTRO;
 
 // Questions and answers
+ArrayList questions, answers;
 String question, answer;
+
+// Response fields
+int trialAttempts;
+float trialStart, trialTime;
+float answerTime;
+float cheatTime;
 
 // Experiment data collection output
 String dataFilePath;
