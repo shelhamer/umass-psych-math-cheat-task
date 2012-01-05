@@ -146,7 +146,8 @@ void answer(String val) {
         answerTime = doneTime - lastStart;
 
         // record this trial
-        out.println(trialTime + "," + trialAttempts + "," + "answerTime" + "," + cheatTime);
+        String record = String.format("%.0f,%d,%.0f,%.0f", trialTime, trialAttempts, answerTime, cheatTime);
+        out.println(record);
         out.flush();
       } else {
         // conclude experiment when trials are exhausted
