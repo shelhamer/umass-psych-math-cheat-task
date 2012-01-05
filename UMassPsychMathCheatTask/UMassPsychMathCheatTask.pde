@@ -88,9 +88,6 @@ void setup() {
   answerLabel.setColorValue(IF_VALUE);
   rightLabel.setColorValue(RIGHT_COLOR);
   wrongLabel.setColorValue(WRONG_COLOR);
-  answerLabel.hide();
-  rightLabel.hide();
-  wrongLabel.hide();
 
   doneG = cp5.addGroup("done", 0, 0, 400);
   doneText = cp5.addTextarea("doneText", "DONE TEXT HERE", 0, 0, 400, 400);
@@ -179,7 +176,6 @@ void doIntro() {
 
 // do practice
 void doPractice() {
-  showTrial();
   thisState = PRACTICE;
 
   question = "1+2+3+4+5";
@@ -207,13 +203,17 @@ void showIntro() {
   doneG.hide();
 }
 
-// show answer interface
+// prepare & show answer interface
 void showTrial() {
-  introG.hide();
-  trialG.show();
-
   eqLabel.setValue(question);
   answerLabel.setValue(answer);
+
+  answerLabel.hide();
+  rightLabel.hide();
+  wrongLabel.hide();
+
+  introG.hide();
+  trialG.show();
 }
 
 // show conclusion
