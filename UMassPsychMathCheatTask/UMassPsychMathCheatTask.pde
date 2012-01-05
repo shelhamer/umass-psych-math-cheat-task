@@ -118,7 +118,7 @@ void draw() {
 
 // answer textfield event handler
 // check submitted answer, inform subject, continue or repeat if right/wrong
-public void answer(String val) {
+void answer(String val) {
   if (thisState == EXPERIMENT) {
     if (answer.equals(val)) {
       // right: show subject, pause, then continue
@@ -157,7 +157,7 @@ void submitButton(int val) {
 
 // keypress handler
 // advance through states when 'c' is pressed
-public void keyPressed() {
+void keyPressed() {
   switch (thisState) {
     case INTRO:
       if (key == 'c') {
