@@ -155,8 +155,8 @@ void submitButton(int val) {
   answerText.submit();
 }
 
-// cheat keypress handler
-// show answer once space bar is pressed
+// keypress handler
+// advance through states when 'c' is pressed
 public void keyPressed() {
   switch (thisState) {
     case INTRO:
@@ -166,17 +166,8 @@ public void keyPressed() {
       break;
 
     case PRACTICE:
-      if (key == ' ') {
-        answerLabel.show();
-      }
       if (key == 'c') {
         doExperiment();
-      }
-      break;
-
-    case EXPERIMENT:
-      if (key == ' ') {
-        answerLabel.show();
       }
       break;
 
@@ -190,18 +181,22 @@ public void keyPressed() {
   }
 }
 
+// mousepress handler
+// allow cheating during practice & experiment by pressing mouse
+void mousePressed() {
+  if (thisState == PRACTICE || thisState == EXPERIMENT)
+    if (mouseButton == RIGHT)
+      answerLabel.show();
+}
+
 // do intro
 void doIntro() {
   // select output file for experiment data
-  if (false) {
   dataFilePath = selectOutput();
   if (dataFilePath == null)
     exit();
   else
     out = createWriter(dataFilePath);
-  }
-  dataFilePath = "/Users/shelhamer/h/temp/test";
-  out = createWriter(dataFilePath);
 
   // start intro
   showIntro();

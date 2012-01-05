@@ -26,10 +26,10 @@ continues.
 
 The experiment is divided into two blocks of ten questions.
 
-Subjects may cheat by pressing the space bar during the presentation of a
-question. The answer is displayed once the space bar has pressed. This is
-explained as an artifact of testing the application that the programmer failed
-to remove when the application was finished.
+Subjects may cheat by pressing the right mouse button during the presentation of
+a question. The answer is displayed once the right mouse button has been
+pressed. This is explained as an artifact of testing the application that the
+programmer failed to remove when the application was finished.
 
 The equations presented for the experiment are fixed for all subjects. If
 desired, random equations could be generated instead with simple modifications
@@ -52,8 +52,8 @@ The data fields recorded for each trial are:
 * solution time: the time (in ms) from the last presentation of the question
   until the submission of the correct solution
 * cheat time: the time in (ms) from the last presentation of the question
-  until the subject cheats by pressing the space bar to display the answer.
-  0 if the subject does not cheat on a trial.
+  until the subject cheats by pressing the right mouse button to display the
+  answer. 0 if the subject does not cheat on a trial.
 
 These fields are written in this order: trial time, number of attempts, solution
 time, cheat time.
