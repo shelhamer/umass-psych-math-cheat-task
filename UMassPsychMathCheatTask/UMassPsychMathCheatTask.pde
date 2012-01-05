@@ -38,6 +38,9 @@ final int EXPERIMENT = 2;
 final int DONE = 3;
 int thisState = INTRO;
 
+// Questions and answers
+String question, answer;
+
 String dataFilePath;
 PrintWriter out;
 
@@ -96,6 +99,19 @@ void draw() {
 // check submitted answer, inform subject, continue or repeat if right/wrong
 public void answer(String val) {
   println("answer submitted : "+ val);
+  if (thisState == EXPERIMENT) {
+    // TODO: continue to next trial if right or repeat
+  }
+  else if (thisState == PRACTICE) {
+    // show subject right/wrong feedback
+    if (answer.equals(val)) {
+      rightLabel.show();
+      wrongLabel.hide();
+    } else {
+      wrongLabel.show();
+      rightLabel.hide();
+    }
+  }
 }
 
 // cheat keypress handler
@@ -154,6 +170,11 @@ void doIntro() {
 void doPractice() {
   showTrial();
   thisState = PRACTICE;
+
+  question = "1+2+3+4+5";
+  answer = "15";
+
+  showTrial();
 }
 
 // do experiment
@@ -179,6 +200,9 @@ void showIntro() {
 void showTrial() {
   introG.hide();
   trialG.show();
+
+  eqLabel.setValue(question);
+  answerLabel.setValue(answer);
 }
 
 // show conclusion
