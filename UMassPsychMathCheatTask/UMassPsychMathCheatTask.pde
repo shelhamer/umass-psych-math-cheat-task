@@ -32,6 +32,7 @@ color IF_ACTIVE = color(232, 47, 47);
 /* =Experiment
 -------------------------------*/
 
+// Application states
 final int INTRO = 0;
 final int PRACTICE = 1;
 final int EXPERIMENT = 2;
@@ -41,6 +42,7 @@ int thisState = INTRO;
 // Questions and answers
 String question, answer;
 
+// Experiment data collection output
 String dataFilePath;
 PrintWriter out;
 
@@ -98,7 +100,6 @@ void draw() {
 // answer textfield event handler
 // check submitted answer, inform subject, continue or repeat if right/wrong
 public void answer(String val) {
-  println("answer submitted : "+ val);
   if (thisState == EXPERIMENT) {
     // TODO: continue to next trial if right or repeat
   }
@@ -127,7 +128,6 @@ public void keyPressed() {
     case INTRO:
       if (key == 'c') {
         doPractice();
-        println("start practice");
       }
       break;
 
@@ -137,7 +137,6 @@ public void keyPressed() {
       }
       if (key == 'c') {
         doExperiment();
-        println("start experiment");
       }
       break;
 
