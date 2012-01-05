@@ -100,6 +100,7 @@ void setup() {
   // set up app window for full screen
   size(screen.width, screen.height);
   frameRate(25);
+  frame.setTitle("UMass Amherst Social Psychology Experiment");
 
   // create interface
   cp5 = new ControlP5(this);
