@@ -7,10 +7,12 @@ ControlP5 cp5;
 
 ControlGroup introG;
 ControlGroup trialG;
+ControlGroup blockG;
 ControlGroup doneG;
 
 Textarea introText;
 Textarea practiceText;
+Textarea blockText;
 Textarea doneText;
 
 Textlabel eqLabel;
@@ -37,12 +39,15 @@ color IF_ACTIVE = color(232, 47, 47);
 final int INTRO = 0;
 final int PRACTICE = 1;
 final int EXPERIMENT = 2;
-final int DONE = 3;
+final int BLOCK = 3;
+final int DONE = 4;
 int thisState = INTRO;
 
 boolean nextTrial = false;
 float trialEnd;
 float TRIAL_PAUSE = 1000;
+
+final int BLOCK_SIZE = 10;
 
 // Questions and answers
 ArrayList questions, answers;
@@ -81,6 +86,12 @@ final String PRACTICE_PROMPT = "This is a practice trial. Please enter the " +
 "\n\n" +
 "When satisified with the practice, please press the SPACE BAR to continue " +
 "and begin the experiment.";
+
+final String BLOCK_PROMPT = "You have completed the first block of " +
+"equations." +
+"\n\n" +
+"Please press the SPACE BAR when you are ready to continue and complete " +
+"the second block of equations.";
 
 final String DONE_PROMPT = "Thank you for completing our math task! The " +
 "experimenter will now provide you with additional instructions.";
@@ -130,6 +141,10 @@ void setup() {
   rightLabel.setColorValue(RIGHT_COLOR);
   wrongLabel.setColorValue(WRONG_COLOR);
 
+  blockG = cp5.addGroup("block", centerX, centerY, groupSize);
+  blockText = cp5.addTextarea("blockText", BLOCK_PROMPT, 0, 0, groupSize, groupSize);
+  blockText.setGroup("block");
+
   doneG = cp5.addGroup("done", centerX, centerY, groupSize);
   doneText = cp5.addTextarea("doneText", DONE_PROMPT, 0, 0, groupSize, groupSize);
   doneText.setGroup("done");
@@ -172,6 +187,7 @@ void answer(String val) {
 
       if (questions.size() > 0) {
         // advance to next trial as long as there are more
+        // or block intermission if 1st block is complete
         nextTrial = true;
 
         // calculate completion times
@@ -183,6 +199,11 @@ void answer(String val) {
         String record = String.format("%.0f,%d,%.0f,%.0f", trialTime, trialAttempts, answerTime, cheatTime);
         out.println(record);
         out.flush();
+
+        // switch to block intermission if block has been completed
+        if (questions.size() == BLOCK_SIZE) {
+          doBlock();
+        }
       } else {
         // conclude experiment when trials are exhausted
         doConclusion();
@@ -226,6 +247,13 @@ void keyPressed() {
     case PRACTICE:
       if (key == ' ') {
         practiceText.hide(); // end practice by hiding prompt
+        doExperiment();
+      }
+      break;
+
+    case BLOCK:
+      if (key == ' ') {
+        blockG.hide(); // end block intermission by hiding prompt
         doExperiment();
       }
       break;
@@ -279,22 +307,33 @@ void doPractice() {
 void doExperiment() {
   thisState = EXPERIMENT;
 
-  // load questions & answers from text file
-  questions = new ArrayList();
-  answers = new ArrayList();
-  BufferedReader reader = createReader("data/questions-answers.txt");
-  try {
-    String line;
-    while ((line = reader.readLine()) != null) {
-      String[] parts = line.split("=");
-      questions.add(parts[0]);
-      answers.add(parts[1]);
+  // load questions & answers from text file (on first call)
+  if (questions == null) {
+    questions = new ArrayList();
+    answers = new ArrayList();
+    BufferedReader reader = createReader("data/questions-answers.txt");
+    try {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        String[] parts = line.split("=");
+        questions.add(parts[0]);
+        answers.add(parts[1]);
+      }
+    } catch (IOException e) {
     }
-  } catch (IOException e) {
   }
 
-  // trigger first trial
+  // trigger trial
   nextTrial = true;
+}
+
+// do block intermission
+void doBlock() {
+  // hold next trial and transition state
+  nextTrial = false;
+  thisState = BLOCK;
+
+  showBlock();
 }
 
 // do conclusion
@@ -307,6 +346,7 @@ void doConclusion() {
 void showIntro() {
   introG.show();
   trialG.hide();
+  blockG.hide();
   doneG.hide();
 }
 
@@ -322,6 +362,12 @@ void showTrial() {
 
   introG.hide();
   trialG.show();
+}
+
+// show block intermission
+void showBlock() {
+  trialG.hide();
+  blockG.show();
 }
 
 // show conclusion
