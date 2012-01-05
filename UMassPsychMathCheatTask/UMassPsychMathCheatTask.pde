@@ -246,7 +246,7 @@ void doExperiment() {
   // load questions & answers from text file
   questions = new ArrayList();
   answers = new ArrayList();
-  BufferedReader reader = createReader("questions-answers.txt");
+  BufferedReader reader = createReader("data/questions-answers.txt");
   try {
     String line;
     while ((line = reader.readLine()) != null) {
