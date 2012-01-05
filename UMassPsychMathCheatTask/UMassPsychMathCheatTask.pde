@@ -114,6 +114,12 @@ public void answer(String val) {
   }
 }
 
+// submit button event handler
+// trigger answer textfield handler
+void submitButton(int val) {
+  answerText.submit();
+}
+
 // cheat keypress handler
 // show answer once space bar is pressed
 public void keyPressed() {
