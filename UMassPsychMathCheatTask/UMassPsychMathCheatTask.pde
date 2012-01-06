@@ -1,4 +1,4 @@
-import controlP5.*;
+import controlP5.*; // ControlP5 0.6.12 (prerelease)
 
 /* =Interface
 -------------------------------*/
@@ -24,7 +24,7 @@ Textfield answerText;
 Button submitButton;
 
 color BG_COLOR = color(250, 250, 250);
-color RIGHT_COLOR = color(31, 95, 31);
+color RIGHT_COLOR = color(31, 127, 31);
 color WRONG_COLOR = color(255, 0, 0);
 color IF_BG = color(236, 236, 236);
 color IF_FG = color(220, 220, 220);
@@ -90,8 +90,9 @@ final String PRACTICE_PROMPT = "This is a practice trial. Please enter the " +
 final String BLOCK_PROMPT = "You have completed the first block of " +
 "equations." +
 "\n\n" +
-"Please press the SPACE BAR when you are ready to continue and complete " +
-"the second block of equations.";
+"Please press the SPACE BAR when you are ready to continue" +
+"\n\n" +
+"and complete the second block of equations.";
 
 final String DONE_PROMPT = "Thank you for completing our math task! The " +
 "experimenter will now provide you with additional instructions.";
@@ -105,13 +106,7 @@ void setup() {
   // create interface
   cp5 = new ControlP5(this);
 
-  cp5.setColorForeground(IF_FG);
-  cp5.setColorBackground(IF_BG);
-  cp5.setColorLabel(IF_LABEL);
-  cp5.setColorValue(IF_VALUE);
-  cp5.setColorActive(IF_ACTIVE);
-
-  int groupSize = 400;
+  int groupSize = 600;
   int centerX = Math.round(screen.width / 2.0 - groupSize / 2.0);
   int centerY = Math.round(screen.height / 2.0 - groupSize / 2.0);
 
@@ -121,10 +116,10 @@ void setup() {
 
   trialG = cp5.addGroup("trial", centerX, centerY, groupSize);
   practiceText = cp5.addTextarea("pracText", PRACTICE_PROMPT, 0, 200, groupSize, groupSize);
-  eqLabel = cp5.addTextlabel("equation", "++++++++++", 10, 50);
-  answerLabel = cp5.addTextlabel("answerLabel", "++++++++++", 10, 140);
-  rightLabel = cp5.addTextlabel("right", "Correct", 10, 20);
-  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 10, 20);
+  eqLabel = cp5.addTextlabel("equation", "++++++++++", 10, 40);
+  answerLabel = cp5.addTextlabel("answerLabel", "++++++++++", 10, 132);
+  rightLabel = cp5.addTextlabel("right", "Correct", 10, 16);
+  wrongLabel = cp5.addTextlabel("wrong", "Incorrect - Please Try Again", 10, 16);
   answerText = cp5.addTextfield("answer", 10, 80, 35, 20);
   submitButton = cp5.addButton("submitButton", 10, 50, 80, 50, 20);
   submitButton.setCaptionLabel("Submit");
@@ -137,10 +132,6 @@ void setup() {
   answerText.setGroup("trial");
   submitButton.setGroup("trial");
   practiceText.setGroup("trial");
-  eqLabel.setColorValue(IF_VALUE);
-  answerLabel.setColorValue(IF_VALUE);
-  rightLabel.setColorValue(RIGHT_COLOR);
-  wrongLabel.setColorValue(WRONG_COLOR);
 
   blockG = cp5.addGroup("block", centerX, centerY, groupSize);
   blockText = cp5.addTextarea("blockText", BLOCK_PROMPT, 0, 0, groupSize, groupSize);
@@ -149,6 +140,40 @@ void setup() {
   doneG = cp5.addGroup("done", centerX, centerY, groupSize);
   doneText = cp5.addTextarea("doneText", DONE_PROMPT, 0, 0, groupSize, groupSize);
   doneText.setGroup("done");
+
+  PFont pfont = createFont("Verdana", 24, true);
+  ControlFont cfont = new ControlFont(pfont);
+
+  introText.valueLabel().setControlFont(cfont);
+  practiceText.valueLabel().setControlFont(cfont);
+  blockText.valueLabel().setControlFont(cfont);
+  doneText.valueLabel().setControlFont(cfont);
+  eqLabel.valueLabel().setControlFont(cfont);
+  answerLabel.valueLabel().setControlFont(cfont);
+  rightLabel.valueLabel().setControlFont(cfont);
+  wrongLabel.valueLabel().setControlFont(cfont);
+  introText.valueLabel().setControlFontSize(12);
+  practiceText.valueLabel().setControlFontSize(12);
+  blockText.valueLabel().setControlFontSize(12);
+  doneText.valueLabel().setControlFontSize(12);
+  eqLabel.valueLabel().setControlFontSize(14);
+  answerLabel.valueLabel().setControlFontSize(14);
+  rightLabel.valueLabel().setControlFontSize(12);
+  wrongLabel.valueLabel().setControlFontSize(12);
+
+  cp5.setColorForeground(IF_FG);
+  cp5.setColorBackground(IF_BG);
+  cp5.setColorLabel(IF_LABEL);
+  cp5.setColorValue(IF_VALUE);
+  cp5.setColorActive(IF_ACTIVE);
+
+  introText.setColorBackground(BG_COLOR);
+  practiceText.setColorBackground(BG_COLOR);
+  blockText.setColorBackground(BG_COLOR);
+  doneText.setColorBackground(BG_COLOR);
+
+  rightLabel.setColorValue(RIGHT_COLOR);
+  wrongLabel.setColorValue(WRONG_COLOR);
 
   // start intro interface
   doIntro();
