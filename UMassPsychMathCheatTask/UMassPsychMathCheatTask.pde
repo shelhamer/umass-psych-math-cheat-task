@@ -78,20 +78,24 @@ final String INTRO_PROMPT = "The following task is a classic cognitive " +
 "If you have any questions before you begin, or if any problems arise " +
 "throughout the research, alert the experimenter." +
 "\n\n" +
+"                                         " +
 "Please press the SPACE BAR to continue.";
 
 final String PRACTICE_PROMPT = "This is a practice trial. Please enter the " +
 "solution to the equation shown. Try submitting a correct and incorrect " +
 "answer to see how the feedback changes." +
 "\n\n" +
-"When satisified with the practice, please press the SPACE BAR to continue " +
+"                     " +
+"When satisified with the practice, please press the SPACE BAR to continue" +
+"\n" +
+"                                                 " +
 "and begin the experiment.";
 
 final String BLOCK_PROMPT = "You have completed the first block of " +
 "equations." +
 "\n\n" +
 "Please press the SPACE BAR when you are ready to continue" +
-"\n\n" +
+"\n" +
 "and complete the second block of equations.";
 
 final String DONE_PROMPT = "Thank you for completing our math task! The " +
